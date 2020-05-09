@@ -6,6 +6,20 @@ from .models import Device, Setup, Zone, Value
 from urllib.request import urlopen
 import json
 import os
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setwarnings(False)
+GPIO.setup(18,GPIO.OUT)
+GPIO.setup(23,GPIO.OUT)
+
+GPIO.setup(24,GPIO.OUT)
+
+GPIO.setup(15,GPIO.OUT)
+GPIO.setup(12,GPIO.OUT)
+GPIO.setup(16,GPIO.OUT)
+
 from datetime import datetime
 import subprocess
 now = datetime.now()
@@ -79,8 +93,12 @@ def hello():
                         obj2.last_measured= datetime.now()
                         if y["waterreading"] <=obj2.min_moisture:
                             print("turned on")
+
                             cmd= "curl -i -X PUT -d '{\"id\":1, \"gpio\":"+obj2.gpio  + ",\"status\":1, \"waterduration\": "  + str(obj2.time_period)+ "}' http://" + obj_device.ipaddress+ ":800/leds"
                             os.system(cmd)
+                            GPIO.output(int(obj2.gpio),GPIO.HIGH)
+                            time.sleep(obj2.time_period)
+                            GPIO.output(obj2.gpio,GPIO.LOW)
                             obj2.last_active_moisture= y["waterreading"]
                             obj2.last_active_measured= datetime.now()
                             print("turned on")
