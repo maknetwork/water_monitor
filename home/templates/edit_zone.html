@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{%block selected6%}active{%endblock%}
+{% load static %}
+
+{% block content %}
+<link href="{% static "plugins/sweetalerts/sweetalert2.min.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "plugins/sweetalerts/sweetalert.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "assets/css/components/custom-sweetalert.css" %}" rel="stylesheet" type="text/css" />
+   <link href="{% static "plugins/bootstrap-range-Slider/bootstrap-slider.css" %}" rel="stylesheet" type="text/css">
+  <link href="{% static "plugins/notification/snackbar/snackbar.min.css" %}" rel="stylesheet" type="text/css" />
+
+<div id="content" class="main-content">
+            <div class="container">
+
+                <div class="container">
+
+
+
+
+                                        <div class="row layout-spacing layout-top-spacing" >
+                                                <div id="flFormsGrid" class="col-lg-12 layout-spacing">
+                                                    <div class="statbox widget box box-shadow" id="blockit">
+                                                    <form method="get" action="/edit_zone_form/"  id="myForm">    <div class="widget-header">
+                                                            <div class="row">
+                                                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                                                    <h4>Create a Zone</h4>
+                                                                </div>
+                                                            </div>      <div class="form-group col-md-6">
+                                                                    <label for="inputCity">Select a zone to edit</label>
+                                                                  <select id="inputCity" class="form-control" name="device_id" required="">
+                                                                    {% for device in devices %}
+                                                                      <option > {{device.name}}</option>
+                                                                    {%endfor%}
+
+                                                                  </select>                                                                    </div>  <div class="text-center">
+                                                                  <button class="btn btn-warning mb-2 mr-2 btn-rounded mt-3" id="button1" type="button">Edit this zone <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></button>
+                                                            </div></form><div  id="update">
+
+                                                        </div>
+                                                        </div>
+
+                                                </div>
+                                            </div>
+
+
+            </div>
+
+
+          </div>
+
+
+{%endblock%}
+{%block footer%}
+
+<script src="{% static "plugins/blockui/jquery.blockUI.min.js" %}"></script>
+
+<script src="{% static "plugins/blockui/custom-blockui.js" %}"></script>
+
+<script src="{% static "plugins/sweetalerts/sweetalert2.min.js" %}"></script>
+<script src="{% static "plugins/sweetalerts/custom-sweetalert.js" %}"></script>
+<script src="{% static "plugins/notification/snackbar/snackbar.min.js" %}"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+
+    <script src="{% static "plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js" %}></script>
+    <!--  BEGIN CUSTOM SCRIPTS FILE  -->
+    <script src="{% static "assets/js/components/notification/custom-snackbar.js" %}"></script>
+    <!--  END CUSTOM SCRIPTS FILE  -->
+
+
+<script>
+  $("#button1").click( function()
+             {
+               var block = $('#blockit');
+
+               $(block).block({
+            message: '<svg> ... </svg>',
+            fadeIn: 800,
+            timeout: 0, //unblock after 2 seconds
+            overlayCSS: {
+                backgroundColor: '#1b2024',
+                opacity: 0.8,
+                zIndex: 1200,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                color: '#fff',
+                zIndex: 1201,
+                padding: 0,
+                backgroundColor: 'transparent'
+            },
+            onBlock: function() {           $("#myForm").submit(); // Submit the form
+
+
+            }
+        });
+        });
+
+        $("#myForm").submit(function(event) {
+            event.preventDefault();
+            $.ajax({ data: $(this).serialize(),
+                     type: $(this).attr('method'),
+                     url: $(this).attr('action'),
+                     success : function(data) {
+
+             $('#update').replaceWith(data);
+             setTimeout($($('#blockit')).unblock(), 1);
+          }
+
+            });
+        });
+ </script>
+
+{%endblock%}

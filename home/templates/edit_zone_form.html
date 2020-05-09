@@ -1,0 +1,117 @@
+<div class="widget-content widget-content-area">
+    <form action="/edit_zone_get/" method="GET" id="myForm2" name="myForm2">
+
+
+
+        <div class="form-row mb-4">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4"  > Zone Name</label>
+                <input type="text" class="form-control" id="inputEmail4" placeholder="{{zone.name}}" name="zone_name"  value="{{zone.name}}" required="">
+            </div>
+
+        </div>
+        <div class="form-group mb-4">
+            <label for="inputAddress">How long the soil should be watered? (in milliseconds)</label>
+            <input type="number" class="form-control" id="inputAddress" name="watering_time" required="" value="{{zone.time_period}}">
+        </div>
+        <div class="form-group mb-4">
+          <label for="soil_moisture">Minimum Soil moisture</label>
+
+          <div class="custom-progress bottom-right progress-down" style="width: 100%">
+<input type="range" min="0" max="100" class="custom-range progress-range-counter"  id="soil_moisture"  value="{{zone.min_moisture}}" name="soil_moisture" required="">
+
+<div class="range-count"><span class="range-count-number" id="soil_value" data-rangecountnumber="0"></span> <span class="range-count-unit">%</span></div>
+</div>
+
+        </div>
+        <div class="form-row mb-4">
+            <div class="form-group col-md-6">
+                <label for="inputCity">Device:</label>
+<input type="hidden" id="inputCity" class="form-control" name="device_id" value="{{zone.device_id.title}}">
+              {{zone.device_id.title}}                                                              </div>
+            <div class="form-group col-md-4">
+                  <label for="inputState">GPIO Pin</label>
+                <select id="inputState" class="form-control" name="gpio_pin" value="{{zone.gpio}}" required="">
+                  <option >16</option>
+
+                  <option>2</option>
+
+                  <option>14</option>
+
+        
+                </select>
+            </div>
+
+        </div>
+
+      <button type="button" class="btn btn-primary mt-3"  form="frm2" id="submit_save">Save</button>
+      <button type="reset" class="btn btn-secondary mt-3" form="frm2" id="submit_reset">Reset</button>
+
+    </form>
+</div>
+<script>
+  var slider = document.getElementById("soil_moisture");
+  var output = document.getElementById("soil_value");
+  output.innerHTML = slider.value; // Display the default slider value
+
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+  }
+</script>
+
+<script>
+  $( document ).ready(function() {
+    $('#submit_save').on('click', function () {
+    swal({
+        title: 'Are you sure?',
+        text: "You want to save this",
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        padding: '2em'
+      }).then(function(result) {
+        if (result.value) {
+          $("#myForm2").submit(); // Submit the form
+
+        }
+      })
+  });
+
+
+
+  });
+
+  $("#myForm2").submit(function(event) {
+      event.preventDefault();
+      $.ajax({ data: $(this).serialize(),
+               type: $(this).attr('method'),
+               url: $(this).attr('action'),
+               success: function(response) {
+                    console.log(response);
+                    if(response['success']) {
+                      Snackbar.show({
+        text: 'Successfully saved the zone profile.',
+        pos: 'bottom-right',
+        actionTextColor: '#fff',
+       backgroundColor: '#8dbf42'
+    });
+                              $("#myForm").trigger("reset");
+
+                    }
+                    if(response['error']) {
+
+    Snackbar.show({
+      text:  response['error'],
+          pos: 'bottom-right',
+          actionTextColor: '#fff',
+              backgroundColor: '#e7515a'
+  });
+
+                    }
+               },
+               error: function (request, status, error) {
+                    console.log(request.responseText);
+               }
+      });
+  });
+</script>

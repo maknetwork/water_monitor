@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+{%block selected3%}active{%endblock%}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static "assets/css/elements/alert.css" %}">
+
+     <link rel="stylesheet" type="text/css" href="{% static "plugins/bootstrap-select/bootstrap-select.min.css" %}">
+<style>
+        /*
+            The below code is for DEMO purpose --- Use it if you are using this demo otherwise Remove it
+        */
+        .page-title {
+            float: none;
+            margin-top: 0;
+            margin-bottom: 0;
+            align-self: center;
+            padding-right: 15px;
+            border-right: 1px solid #bfc9d4;
+            margin-right: 15px;
+        }
+        .page-title h3 {
+            margin-bottom: 0;
+        }
+        .page-header {
+            display: flex;
+            padding: 0;
+            margin-bottom: 16px;
+            margin-top: 30px
+        }
+        .breadcrumb-one {
+            display: inline-block;
+            align-self: center;
+        }
+        .breadcrumb-one .breadcrumb {
+            padding: 0;
+            vertical-align: text-bottom;
+            margin-bottom: 0;
+            background: transparent;
+        }
+        .breadcrumb-one .breadcrumb-item {
+            align-self: center;
+        }
+        .breadcrumb-one .breadcrumb-item a {
+            color: #888ea8;
+            vertical-align: text-bottom;
+        }
+        .breadcrumb-one .breadcrumb-item a svg {
+            width: 20px;
+            height: 20px;
+            vertical-align: sub;
+        }
+        .breadcrumb-one .breadcrumb-item.active a {
+            color: #009688;
+        }
+        .breadcrumb-one .breadcrumb-item span {
+            vertical-align: text-bottom;
+        }
+        .breadcrumb-one .breadcrumb-item.active {
+            color: #009688;
+            font-weight: 600;
+        }
+        .breadcrumb-one .breadcrumb-item+.breadcrumb-item {
+            padding: 0px;
+        }
+        .breadcrumb-one .breadcrumb-item+.breadcrumb-item::before {
+            color: #515365;
+            font-size: 0;
+            content: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 24 24" fill="none" stroke="%23555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>');
+            vertical-align: text-top;
+            padding: 0 6px;
+        }
+
+
+        @media(max-width: 575px) {
+            .page-header {
+                display: block;
+            }
+            .page-title {
+                margin-bottom: 20px;
+                border: none;
+                padding-right: 0;
+                margin-right: 0;
+            }
+        }
+
+
+        /*
+            Just for demo purpose ---- Remove it.
+        */
+        /*<starter kit design>*/
+
+        .widget-one {
+
+        }
+        .widget-one h6 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0px;
+            margin-bottom: 22px;
+        }
+        .widget-one p {
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        /*</starter kit design>*/
+
+    </style>
+  <link href="{% static "assets/css/components/custom-list-group.css" %}" rel="stylesheet" type="text/css">
+<  <div id="content" class="main-content">
+
+            <div class="container">
+
+                <div class="container">
+
+
+                    <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+
+                      <div class="page-header">
+                                          <div class="page-title">
+
+                                              <h3>Manage Devices</h3>
+                                          </div>
+
+
+                                      </div>
+
+                        <div id="listGroupImages" class="col-lg-12 layout-spacing">
+
+                            <div class="statbox widget box box-shadow" id="blockit">
+                                <div class="widget-header">
+                                    <div class="row" id="updated">
+                                                                           <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+
+  <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+    <h4>Manage devices</h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>    <div class="widget-content widget-content-area">
+                                  {% if messages %}
+                                  {% for message in messages %}
+ {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                     <div class="alert alert-danger mb-4" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>Alert! </strong>{{ message }}</div>
+{%else%}
+     <div class="alert alert-success mb-4" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><strong>Success! </strong> {{ message }}</div>
+                                     {% endif %}
+                                     {% endfor %}
+{% endif %}
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-4">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Ip Address</th>
+                                                    <th class="text-center">Time periods</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>      {% for device in devices %}
+
+                                                <tr>
+                                                    <td>{{device.title}}</td>
+                                                    <td>{{device.ipaddress}}</td>
+
+                                                    <td >
+
+{% for hex in device.blog_posts.all %}
+<ul class="table-controls">
+    <li>  <span class="badge badge-success">{{hex.time_1}}</span>
+      <span class="badge badge-success">{{hex.time_2}}</span>
+      <span class="badge badge-success">{{hex.time_3}}</span>
+      <span class="badge badge-success">{{hex.time_4}}</span>
+      <span class="badge badge-success">{{hex.time_5}}</span></li>
+    <li>  <span class="badge badge-info">{{hex.time_6}}</span>
+      <span class="badge badge-info">{{hex.time_7}}</span>
+      <span class="badge badge-info">{{hex.time_8}}</span>
+      <span class="badge badge-info">{{hex.time_9}}</span>
+      <span class="badge badge-info">{{hex.time_10}}</span></li>
+
+</ul>{%endfor%}
+
+
+                                                      </td>
+                                                    <td class="text-center">
+      <a href="javascript:void(0);"  data-toggle="modal" data-target="#tabsModal{{device.id}}" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+
+                                                   </td>
+                                                </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="tabsModal{{device.id}}" tabindex="-1" role="dialog" aria-labelledby="tabsModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="tabsModalLabel">Set time periods for {{device.title}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form action="/set_timeperiod/" method="POST"  id="frm1{{device.id}}" name="frm1{{device.id}}" >{% csrf_token %}
+
+                                                <div class="tab-content" id="myTabContent">
+                                                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                    <div class="form-group mb-0">
+                                                      <label >Select time period </label>
+
+                                                      <select class="form-control basic" name="deviceselect" id="device_select" required=""  data-live-search="true">
+
+                                      <option>Time 1</option>
+                                      <option>Time 2</option>
+                                      <option>Time 3</option>
+                                      <option>Time 4</option>
+                                      <option>Time 5</option>
+                                      <option>Time 6</option>
+                                      <option>Time 7</option>
+                                      <option>Time 8</option>
+                                      <option>Time 9</option>
+                                      <option>Time 10</option>
+
+
+                                    </select>
+</div>
+                                                    <div class="form-group mb-0" style="
+    margin-top: 20px;
+">                                                      <label >Set a time</label>
+                                                      <input type="hidden" id="custId" name="device_id" value="{{device.id}}">
+
+      <input id="t-text" type="time" name="timeperiods" class="form-control" required=""> </div>         </div>
+                                                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                        <p class="modal-text">Fusce ac fringilla ex. Sed ligula ipsum, fringilla ut orci nec, suscipit commodo felis. Sed imperdiet eros dignissim, vehicula erat vel, rutrum lorem. In porttitor id ante nec laoreet. Etiam quis sapien ac nunc ullamcorper elementum. Fusce ullamcorper ante convallis nisl eleifend, sit amet dapibus urna eleifend.</p></div>
+                                                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                                        <p class="modal-text">Pellentesque semper tortor id ligula ultrices suscipit. Donec viverra vulputate lectus non consectetur. Donec ac interdum lacus. Donec euismod nisi at justo molestie elementum. Vivamus vitae hendrerit neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p></div>
+                                                </div>
+                                            </div>
+                                          <div class="modal-footer">
+                                            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                            <button type="submit" class="btn btn-primary" form="frm1{{device.id}}">Save</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>  </form>
+
+
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Vertically Aligned</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4 class="modal-heading mb-4 mt-2">Aligned Center</h4>
+                                                        <p class="modal-text">In hac habitasse platea dictumst. Proin sollicitudin et lacus in tincidunt. Integer nisl ex, sollicitudin eget nulla nec, pharetra lacinia nisl. Aenean nec nunc ex. Integer varius neque at dolor scelerisque porttitor.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                                    <button type="button" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                                    {%endfor%}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+          </div>
+
+
+{%endblock%}
+{%block footer%}
+<script src="{% static "plugins/jquery-ui/jquery-ui.min.js" %}"></script>
+
+
+<script src="{% static "plugins/blockui/jquery.blockUI.min.js" %}"></script>
+
+
+<script src="{% static "plugins/blockui/custom-blockui.js" %}"></script>
+<script src="{% static "plugins/bootstrap-select/bootstrap-select.min.js" %}"></script>
+
+<script>
+
+$(document).ready(function (){
+  $("#timeFlatpickr").flatpickr({
+		altInput: false,
+		enableTime: true,
+		noCalendar: true,
+		dateFormat: "h:i K",
+  });
+  // Change modal to false to see that it doesn't happen there
+  $("").dialog({
+    autoOpen: true,
+    modal: true,
+  }
+  );
+});
+
+
+</script>
+
+{%endblock%}

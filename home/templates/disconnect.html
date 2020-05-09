@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{%block selected4%}active{%endblock%}
+{% load static %}
+
+{% block content %}
+<link href="{% static "plugins/sweetalerts/sweetalert2.min.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "plugins/sweetalerts/sweetalert.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "assets/css/components/custom-sweetalert.css" %}" rel="stylesheet" type="text/css" />
+  <link href="{% static "assets/css/components/custom-list-group.css" %}" rel="stylesheet" type="text/css">
+
+  <link href="{% static "plugins/notification/snackbar/snackbar.min.css" %}" rel="stylesheet" type="text/css" />
+
+<  <div id="content" class="main-content">
+            <div class="container">
+
+                <div class="container">
+
+
+                    <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+
+
+                      <div id="listGroupTask" class="col-lg-12 layout-spacing">
+                            <div class="statbox widget box box-shadow">
+                                <div class="widget-header">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                            <h4>Select devices to disconnect</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <form action="/disconnect_device/" method="GET" id="myForm"  >
+
+                                <div class="widget-content widget-content-area">
+                                    <ul class="list-group task-list-group">
+
+
+                                      {% for device in devices %}
+                                        <li class="list-group-item list-group-item-action">
+                                            <div class="n-chk">
+                                                <label class="new-control new-checkbox checkbox-primary w-100 justify-content-between">
+                                                  <input type="checkbox" name="device_id[]" value="{{device.id}}" class="new-control-input">
+                                                  <span class="new-control-indicator"></span>
+                                                    <span class="ml-2">
+                                                      {{device.title}}
+                                                    </span>
+                                                    <span class="ml-3 d-block">
+                                                        <span class="badge badge-primary">{{device.ipaddress}}</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </li>
+
+                                        {%endfor%}
+
+                                    </ul>
+                                    <div class="widget-content widget-content-area text-right">
+                                                                    <button class="mr-2 btn btn-danger  warning confirm" type="button">Disconnect</button>
+
+
+
+                                                                </div>
+
+                            </div> </form>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+          </div>
+
+
+{%endblock%}
+{%block footer%}
+<script src="{% static "plugins/blockui/jquery.blockUI.min.js" %}"></script>
+
+<script src="{% static "plugins/blockui/custom-blockui.js" %}"></script>
+
+<script src="{% static "plugins/sweetalerts/sweetalert2.min.js" %}"></script>
+<script src="{% static "plugins/sweetalerts/custom-sweetalert.js" %}"></script>
+<script src="{% static "plugins/notification/snackbar/snackbar.min.js" %}"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+
+    <!--  BEGIN CUSTOM SCRIPTS FILE  -->
+    <script src="{% static "assets/js/components/notification/custom-snackbar.js" %}"></script>
+    <!--  END CUSTOM SCRIPTS FILE  -->
+
+
+<script>
+  $( document ).ready(function() {
+    $('.widget-content .warning.confirm').on('click', function () {
+    swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        padding: '2em'
+      }).then(function(result) {
+        if (result.value) {
+          $("#myForm").submit(); // Submit the form
+
+        }
+      })
+  });
+
+
+
+  });
+
+  $("#myForm").submit(function(event) {
+      event.preventDefault();
+      $.ajax({ data: $(this).serialize(),
+               type: $(this).attr('method'),
+               url: $(this).attr('action'),
+               success: function(response) {
+                    console.log(response);
+                    if(response['success']) {
+                      $("#div1").fadeIn();
+                      Snackbar.show({
+        text: 'Successfully disconnected the device.',
+        pos: 'bottom-right',
+        actionTextColor: '#fff',
+       backgroundColor: '#8dbf42'
+    });
+                              $("#myForm").trigger("reset");
+
+                    }
+                    if(response['error']) {
+
+    Snackbar.show({
+      text:  response['error'],
+          pos: 'bottom-right',
+          actionTextColor: '#fff',
+              backgroundColor: '#e7515a'
+  });
+
+                    }
+               },
+               error: function (request, status, error) {
+                    console.log(request.responseText);
+               }
+      });
+  });
+</script>
+{%endblock%}

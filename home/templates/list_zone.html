@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{%block selected7%}active{%endblock%}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static "assets/css/elements/alert.css" %}">
+<link href="{% static "plugins/apex/apexcharts.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "plugins/sweetalerts/sweetalert2.min.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% static "plugins/sweetalerts/sweetalert.css" %}" rel="stylesheet" type="text/css" />
+     <link rel="stylesheet" type="text/css" href="{% static "plugins/bootstrap-select/bootstrap-select.min.css" %}">
+<style>
+        /*
+            The below code is for DEMO purpose --- Use it if you are using this demo otherwise Remove it
+        */
+        .page-title {
+            float: none;
+            margin-top: 0;
+            margin-bottom: 0;
+            align-self: center;
+            padding-right: 15px;
+            border-right: 1px solid #bfc9d4;
+            margin-right: 15px;
+        }
+        .page-title h3 {
+            margin-bottom: 0;
+        }
+        .page-header {
+            display: flex;
+            padding: 0;
+            margin-bottom: 16px;
+            margin-top: 30px
+        }
+        .breadcrumb-one {
+            display: inline-block;
+            align-self: center;
+        }
+        .breadcrumb-one .breadcrumb {
+            padding: 0;
+            vertical-align: text-bottom;
+            margin-bottom: 0;
+            background: transparent;
+        }
+        .breadcrumb-one .breadcrumb-item {
+            align-self: center;
+        }
+        .breadcrumb-one .breadcrumb-item a {
+            color: #888ea8;
+            vertical-align: text-bottom;
+        }
+        .breadcrumb-one .breadcrumb-item a svg {
+            width: 20px;
+            height: 20px;
+            vertical-align: sub;
+        }
+        .breadcrumb-one .breadcrumb-item.active a {
+            color: #009688;
+        }
+        .breadcrumb-one .breadcrumb-item span {
+            vertical-align: text-bottom;
+        }
+        .breadcrumb-one .breadcrumb-item.active {
+            color: #009688;
+            font-weight: 600;
+        }
+        .breadcrumb-one .breadcrumb-item+.breadcrumb-item {
+            padding: 0px;
+        }
+        .breadcrumb-one .breadcrumb-item+.breadcrumb-item::before {
+            color: #515365;
+            font-size: 0;
+            content: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 24 24" fill="none" stroke="%23555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>');
+            vertical-align: text-top;
+            padding: 0 6px;
+        }
+
+
+        @media(max-width: 575px) {
+            .page-header {
+                display: block;
+            }
+            .page-title {
+                margin-bottom: 20px;
+                border: none;
+                padding-right: 0;
+                margin-right: 0;
+            }
+        }
+
+
+        /*
+            Just for demo purpose ---- Remove it.
+        */
+        /*<starter kit design>*/
+
+        .widget-one {
+
+        }
+        .widget-one h6 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0px;
+            margin-bottom: 22px;
+        }
+        .widget-one p {
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        /*</starter kit design>*/
+
+    </style>
+  <link href="{% static "assets/css/components/custom-list-group.css" %}" rel="stylesheet" type="text/css">
+s  <div id="content" class="main-content">
+
+            <div class="container">
+
+                <div class="container">
+
+
+                    <div class="row layout-spacing layout-top-spacing" id="cancel-row">
+
+                      <div class="page-header">
+                                          <div class="page-title">
+
+                                              <h3>List Zones</h3>
+                                          </div>
+
+
+                                      </div>
+
+                        <div id="listGroupImages" class="col-lg-12 layout-spacing">
+
+                            <div class="statbox widget box box-shadow" id="blockit">
+                                <div class="widget-header">
+                                    <div class="row" id="updated">
+                                                                           <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+
+  <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+    <h4>Zones</h4>
+
+                                        </div>
+
+                                    </div>
+                                </div>    <div class="widget-content widget-content-area">
+                                  {% if messages %}
+                                  {% for message in messages %}
+ {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                     <div class="alert alert-danger mb-4" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>Alert! </strong>{{ message }}</div>
+{%else%}
+     <div class="alert alert-success mb-4" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button><strong>Success! </strong> {{ message }}</div>
+                                     {% endif %}
+                                     {% endfor %}
+{% endif %}
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-4">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Device name</th>
+                                                    <th>GPIO Pin</th>
+                                                    <th >Minimum Moisture</th>
+                                                    <th >Last measured on</th>
+                                                    <th >Last measured value</th>
+                                                    <th >Last watering activated</th>
+                                                    <th >Last activated moisture</th>
+                                                    <th >Delete zone</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>      {% for zone in zones %}
+<form method="get" action="delete_zone" id="myfrm{{zone.name}}">
+                                                <tr>
+                                                    <td>{{zone.name}}
+</td>
+                                                    <td><span class="badge badge-primary"> {{zone.device_id.title}} </span></td>
+                                                    <td>           {{zone.gpio}}
+</td>
+                                                    <td >{{zone.min_moisture}}
+
+</td><td>{{zone.last_measured}}</td><td>{{zone.last_measured_moisture}}</td><td>{{zone.last_active_measured}}</td><td>{{zone.last_active_moisture}}</td>
+<td ><a href="/delete_zone/?zone_id={{zone.pk}}"   data-toggle="modal" data-target="#exampleModalCenter" data-placement="top" title="Delete" id="delete_button{{zone.pk}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+
+</td>
+                                                </tr>
+
+
+
+</form><script>
+  $( document ).ready(function() {
+
+  $('#delete_button{{zone.pk}}').click(function(event) {
+      event.preventDefault();
+      var href = this.href;
+      swal({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Delete',
+          padding: '2em'
+        }).then(function(result) {
+          if (result.value) {
+            window.location = href;
+
+          }
+        })
+  });
+
+
+  });
+</script>
+                                                    {%endfor%}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+          </div>
+
+
+{%endblock%}
+{%block footer%}
+<script src="{% static "plugins/jquery-ui/jquery-ui.min.js" %}"></script>
+
+
+<script src="{% static "plugins/blockui/jquery.blockUI.min.js" %}"></script>
+
+<script src="{% static "plugins/apex/apexcharts.min.js" %}"></script>
+ <script src="{% static "plugins/apex/custom-apexcharts.js" %}"></script>
+<script src="{% static "plugins/blockui/custom-blockui.js" %}"></script>
+<script src="{% static "plugins/bootstrap-select/bootstrap-select.min.js" %}"></script>
+<script src="{% static "plugins/sweetalerts/sweetalert2.min.js" %}"></script>
+<script src="{% static "plugins/sweetalerts/custom-sweetalert.js" %}"></script>
+
+{%endblock%}

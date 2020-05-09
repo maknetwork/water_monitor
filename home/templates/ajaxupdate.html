@@ -1,0 +1,45 @@
+<div class="widget-content widget-content-area">
+    <ul class="list-group list-group-media">
+      {% for key, value in device.items %}
+
+        <li class="list-group-item list-group-item-action">
+            <div class="media">
+                <div class="mr-3">
+                  <button class="btn btn-primary btn-rounded mb-2" data-toggle="modal" data-target="#exampleModalCenter{{value.friendlyName}}">Connect</button>
+                </div>
+
+                <div class="media-body">
+                    <h6 class="tx-inverse">{{value.friendlyName}}</h6>
+                    <p class="mg-b-0">{{key}}</p>
+                </div>
+            </div>
+        </li><div class="modal fade" id="exampleModalCenter{{value.friendlyName}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Connect to a device</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="modal-body">
+                <p class="modal-text">Do you really want to add {{value.friendlyName}} with ip address {{key}} ? </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+            <button type="button" onclick="window.location.href = '/save_device/?device_name={{value.friendlyName}}&ip_address={{key}}';" class="btn btn-primary">Connect</button>
+        </div>
+    </div>
+</div>
+</div>
+        {%endfor%}
+
+
+    </ul>
+
+    {% if device|length > 0 %}
+    {%else%}
+    <div class="text-center">
+
+<h3>No new devices found </h3>  </div>  {% endif %}
+</div>
